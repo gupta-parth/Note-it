@@ -1,0 +1,116 @@
+body 
+{
+    background-color: beige;
+}
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+}
+
+main .c
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+    margin: 7px;
+    border-width: 1px;
+    border-color: black;
+}
+
+main .border-add
+{
+    border-width: 1px;
+    border-color: black;
+}
+main #note-delete-button
+{
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
+
+main .btn-dark
+{
+    margin: 7px;
+    margin-bottom: 10px;
+}
+
+main .btn-dark:hover, .btn-dark:focus
+{
+    color: darkgrey
+}
+
+main #note-card
+{
+    margin: 20px;
+}
+
+main #welcome-animation
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+
+main #welcome-animation span
+{
+    text-transform: uppercase;
+    display: block;
+
+}
+
+main .text1 
+{   
+    color: black;
+    font-size: 70px;
+    font-weight: 700;
+    letter-spacing: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    animation: text 3s 1;
+}
+
+main .text2
+{
+    font-size: 40px;
+    color: darkgoldenrod;
+    animation: text 3s 1;
+
+}
+
+main #quote .blockquote
+{
+    font-family: sans-serif;
+    font-style: italic;
+    
+}
+
+main .delete-form 
+{
+    margin: 7px;
+}
+
+/* animation taken from https://youtu.be/Syg_9iB1vco */
+@keyframes text {
+    0%{
+        color: black;
+        margin-bottom: -20px;
+    }
+    30%{
+        letter-spacing: 40px;
+        margin-bottom: -40px;
+    }
+    85%{
+        letter-spacing: 10px;
+        margin-bottom: -40px;
+    }
+}
+

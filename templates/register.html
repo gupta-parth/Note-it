@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+<form id="register-form" action="/register" method="post">
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control c" name="username" placeholder="Username" type="text">
+    </div>
+    <div class="form-group">
+        <input id="password" autocomplete="off" autofocus class="form-control c" name="password" placeholder="Password" type="text" onchange="check()">
+    </div>
+    <div class="form-group">
+        <input id="confirm" autocomplete="off" autofocus class="form-control c" name="confirmation" placeholder="Confirmation" type="text">
+    </div>
+    <button id="submit" class="btn btn-dark" type="submit">Register</button>
+</form>
+{% endblock %}
+
+{% block script %}
+<script>
+    // For password validation feature
+    document.querySelector("#submit").disabled = true;
+    function check () {
+        let password = document.querySelector("#password").value;
+
+        if (password.length > 6 && password.match(/[0-9]/g) && password.match(/(!|@|#|\$|%|^|&|\*)/)){
+            document.querySelector("#submit").disabled = false;
+        }
+        else {
+            document.querySelector("#submit").disabled = true;
+            window.alert("Password must be greater than 6 characters and must contain a special character and digit")
+
+        }
+    }
+</script>
+{% endblock%}

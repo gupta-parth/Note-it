@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Notes
+{% endblock %}
+
+
+{% block main %}
+<!-- For adding a new note -->
+<button type="button" id="add-note-button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">New</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New note</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" id="title">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Content:</label>
+            <textarea class="form-control" id="content"></textarea>
+          </div>
+          <!-- <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Date created:</label>
+            <input type="text" class="form-control" id="date">
+          </div> -->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="create" type="button" class="btn btn-primary" onclick="submit_entry();">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form action="/notes/delete-note" method="POST" class="delete-form">
+  <div class="form-group">
+    <input class="c" autocomplete="off" name="note-id" placeholder="Enter Note Id" type="number">
+    <button id="submit" class="btn btn-warning btn-sm" type="submit">Delete</button>
+  </div>
+</form>
+
+{% if not notes %}
+  <h3>You have no notes. Click the button to add notes</h3>
+{% else %}
+  <div id="notes-view" class="row">
+  {% for note in notes %}
+    <div id="note-card" class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+        <div class="header">Id: {{ note.id }}</div>
+        <div id ="note-date" class="card-header">Date: {{ note.date_created }}</div>
+        <div class="card-body">
+          <h5 class="card-title">{{ note.title }}</h5>
+          <p class="card-text">{{ note.content }}</p>
+        </div>
+    </div>
+  {% endfor %}
+  </div>
+
+{% endif %}
+{% endblock %}
+
+
+{% block script %}
+
+<script>
+  
+
+  function submit_entry() {
+
+    var title = document.getElementById("title");
+    var content = document.getElementById("content");
+    if (!content) {
+      document.querySelector("#create").disabled = true;
+      window.alert("Must have content to create a note")
+    }
+
+    var entry = {
+      title: title.value,
+      content: content.value
+    };
+
+    fetch(`${window.origin}/notes/add-note`, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(entry),
+      cache: "no-cache",
+      header: new Headers({
+        "content-type": "application/json"
+      })
+    })
+    .then(function (response) {
+      if (response.status !== 200) {
+        console.log(`Response status was not 200: ${response.status}`);
+        return ;
+      }
+
+    })
+
+    $("#exampleModal").modal("hide");
+    location.reload();
+
+  }
+
+
+</script>
+{% endblock%}
